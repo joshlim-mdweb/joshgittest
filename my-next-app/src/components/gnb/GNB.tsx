@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { useState } from 'react'
 
 // Figma node: 922:498, 922:528, 922:531
@@ -54,13 +55,13 @@ export default function GNB() {
   return (
     // data-node-id="922:498"
     <nav className="bg-[#19191e] w-full px-12 py-5 rounded-xl" onMouseLeave={() => setActiveDropdown(null)}>
-      <div className="max-w-[1400px] mx-auto flex items-center justify-between">
+      <div className="max-w-[1380px] mx-auto flex items-center justify-between">
 
         {/* Left: Logo + Nav */}
         <div className="flex items-center gap-[58px]">
-          <a href="/" className="shrink-0 size-10 block">
+          <Link href="/" className="shrink-0 size-10 block">
             <img src={MD_LOGO} alt="Marvelous Designer" className="size-full object-cover" />
-          </a>
+          </Link>
 
           <div className="flex items-center gap-10">
             {/* Features */}

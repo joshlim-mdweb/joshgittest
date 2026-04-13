@@ -469,11 +469,13 @@ const SUPPORT_CHANNELS = [
 export default function PlanPage() {
   return (
     <div className="min-h-screen bg-[#19191e]">
-      <header className="px-6 pt-6">
-        <GNB />
-      </header>
 
-      <main className="max-w-[1400px] mx-auto px-6">
+      <div className="flex-1 min-w-0">
+        <header className="px-6 pt-6">
+          <GNB />
+        </header>
+
+        <main className="max-w-[1380px] mx-auto px-6">
 
         {/* Page Title */}
         <div className="pt-[100px] pb-[56px]">
@@ -532,7 +534,10 @@ export default function PlanPage() {
           </div>
         </div>
 
-      </main>
+        </main>
+
+      </div>
+
     </div>
   )
 }

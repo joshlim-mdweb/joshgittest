@@ -1,0 +1,113 @@
+---
+description: MD Web UX — Figma 캡처 워크플로우, 타겟 파일, 명명 규칙, DOCS 기록 기준
+alwaysApply: true
+---
+
+# Figma UX Workflow
+
+## Target Figma Project
+
+| 항목 | 값 |
+|------|----|
+| Project URL | `https://www.figma.com/files/1116539241324317268/project/57789726` |
+| Team ID | `1116539241324317268` |
+| Project ID | `57789726` |
+| 현재 작업 파일 | `2026-RENEWAL` (`PeCid7uJcg0HenViaaiHUp`) |
+| Figma Pages | `00 FLOW` / `01 IA` / `02 WIREFRAMES` / `03 DOCS` |
+
+> 전용 UX 파일로 분리하면 fileKey만 업데이트한다. Project ID는 고정.
+
+## 4단계 확인 프로세스 (Figma push 전 필수)
+
+Figma push 전 AI는 아래 4단계를 순서대로 사용자에게 확인한다. 각 단계마다 **"이렇게 해도 될까요?"**를 물어보고 YES/NO 응답을 받아야 한다.
+
+```
+[Step 1 — 파일 선택]
+Project 57789726 내 작업 파일을 결정합니다.
+현황: {현재 파일 목록 또는 "기존 파일 없음"}
+제안: "2026-RENEWAL에 추가" 또는 "새 파일 'MD Web — UX' 생성"
+→ 이렇게 해도 될까요?
+
+[Step 2 — 페이지 선택]
+파일 내 어느 페이지에 넣을지 결정합니다.
+현황: {해당 파일의 페이지 목록}
+제안: "02 WIREFRAMES에 추가" / 또는 새 페이지명
+→ 이렇게 해도 될까요?
+
+[Step 3 — 프레임 선택]
+신규 프레임으로 추가할지, 기존 프레임을 업데이트할지 결정합니다.
+현황: {screens.ts의 figmaNodeId 값, 없으면 "첫 캡처"}
+제안: "[NEW] {PageName} — v1" 또는 "[UPDATE] {PageName} — v{n}"
+→ 이렇게 해도 될까요?
+
+[Step 4 — 최종 확인]
+아래 내용으로 push + DOCS 기록을 진행합니다.
+  파일: {파일명}
+  페이지: {Figma 페이지}
+  프레임: {프레임명}
+  캡처 대상: {route 목록}
+→ 진행할까요?
+```
+
+## 전체 워크플로우 (7단계)
+
+```
+① 요청 접수
+② /route → 트랙 판단 (Full Cycle / Fast Track)
+③ 요구사항 수집 → 신규/수정 결정
+④ 적용 내용 작성 (변경 요약 + 근거)
+⑤ 구현 (Wireframe + Description)
+⑥ 로컬 확인 (yarn dev)
+⑦ Figma push → DOCS 기록
+```
+
+## Figma Push 규칙
+
+### 언제 push하나
+- 페이지/컴포넌트 신규 구현 완료 후
+- 기존 화면 구조 변경 후 (레이아웃, 플로우, 섹션 추가/제거)
+- 정책/IA 변경 후
+
+### 어느 Figma Page에 넣나
+
+| 산출물 | Figma Page | 설명 |
+|--------|------------|------|
+| 유저 플로우 | `00 FLOW` | SVG 플로우 뷰 캡처 (`/wireframe?tab=flow`) |
+| IA 구조 | `01 IA` | IA 트리 뷰 캡처 (`/wireframe?tab=ia`) |
+| 화면 와이어프레임 | `02 WIREFRAMES` | 각 페이지 캡처 |
+| 히스토리·정책 | `03 DOCS` | 텍스트 프레임으로 기록 |
+
+### Frame 네이밍 규칙
+
+```
+[신규]   [NEW] {PageName} — v{n}     예) [NEW] Plan — v1
+[수정]   [UPDATE] {PageName} — v{n}  예) [UPDATE] Home — v2
+[삭제]   [REMOVED] {PageName}        예) [REMOVED] Pricing
+[플로우] FLOW — {date}               예) FLOW — 2026-04-07
+[IA]    IA — {date}                 예) IA — 2026-04-07
+```
+
+### DOCS 기록 형식 (03 DOCS 페이지)
+
+```
+날짜: YYYY-MM-DD
+작업자: {담당 에이전트}
+변경 내용: {1-2줄 요약}
+근거: {회의록/정책/디자인 결정 근거}
+---
+```
+
+## 신규 vs 수정 판단 기준
+
+| 조건 | 판단 |
+|------|------|
+| `src/app/` 에 해당 route 없음 | 신규 [NEW] |
+| route 있고 레이아웃/섹션 구조 변경 | 수정 [UPDATE] |
+| 텍스트/스타일만 변경 | push 생략 가능 |
+| IA 구조 변경 (메뉴 추가/제거) | FLOW + IA 재캡처 필수 |
+
+## 캡처 스크립트 주입 규칙
+
+1. `layout.tsx`에 임시 주입 → capture 완료 후 **즉시 제거**
+2. 캡처 스크립트 잔류 금지 — 커밋에 포함되지 않도록
+3. 여러 페이지 동시 캡처 시 capture ID 1개 = 1페이지 (재사용 금지)

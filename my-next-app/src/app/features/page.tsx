@@ -100,7 +100,7 @@ export default function FeaturesPage() {
         <GNB />
       </header>
 
-      <main className="max-w-[1400px] mx-auto px-6">
+      <main className="max-w-[1380px] mx-auto px-6">
 
         {/* Page Header — Figma node: 1088:1532 */}
         <div className="flex flex-col gap-[47px] items-start pt-[120px] pb-[80px] max-w-[811px]">

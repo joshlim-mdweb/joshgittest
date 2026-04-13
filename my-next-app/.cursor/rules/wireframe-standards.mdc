@@ -1,0 +1,61 @@
+---
+description: MD Web 와이어프레임 컴포넌트 표준 — light/dark theme, WF 컴포넌트 사용법, description 작성 기준
+globs: src/app/**/*.tsx,src/components/**/*.tsx
+alwaysApply: false
+---
+
+# Wireframe Standards
+
+## Theme
+
+와이어프레임은 **light / dark** 두 가지 theme을 지원한다.
+
+| Theme | 배경 | 테두리 | 텍스트 | 이미지 placeholder |
+|-------|------|--------|--------|-------------------|
+| `light` | `#ffffff` | `#c4c4c4` | `#6b7280` | `#e5e7eb` + X 마크 |
+| `dark` | `#19191e` | `#3a3a44` | `#6b7280` | `#2a2a32` + X 마크 |
+
+> Figma push 전 **light mode로 전환**하여 캡처한다. Figma는 밝은 배경이 가독성이 좋다.
+
+## WF 컴포넌트 (src/components/wireframe/)
+
+| 컴포넌트 | 용도 |
+|----------|------|
+| `WFImage` | 이미지 자리표시자 — X 마크 박스 |
+| `WFText` | 텍스트 자리표시자 — 회색 막대 |
+| `WFBtn` | 버튼 자리표시자 — 테두리 박스 |
+| `WFSection` | 섹션 컨테이너 — 점선 테두리 |
+
+모든 WF 컴포넌트는 `theme` prop을 받는다:
+
+```tsx
+// ✅ GOOD
+<WFImage theme="light" width={400} height={300} label="Hero image" />
+<WFText theme="dark" lines={3} />
+
+// ❌ BAD — theme 없이 사용
+<WFImage width={400} height={300} />
+```
+
+## Screen Description 작성 기준
+
+`/wireframe` 뷰어의 description 패널에 표시되는 내용이자 Figma DOCS 기록의 근거가 된다.
+
+`src/lib/screens.ts`의 각 Screen 항목에 반드시 포함:
+
+```ts
+{
+  description: "페이지의 핵심 목적 — 1줄",
+  notes: "UX 결정 근거, 정책 제약, 디자인 주의사항",
+  linksTo: ["연결되는 route 배열"],
+}
+```
+
+## 신규 페이지 구현 체크리스트
+
+- [ ] `src/lib/screens.ts`에 Screen 항목 추가
+- [ ] 와이어프레임 `theme` prop 연결
+- [ ] description + notes 작성
+- [ ] `/wireframe` Flow/IA 뷰에서 노드 위치 확인
+- [ ] `yarn lint` 통과
+- [ ] Figma push → `02 WIREFRAMES` 페이지에 추가

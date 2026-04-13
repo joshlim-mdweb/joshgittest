@@ -1,0 +1,61 @@
+---
+description: Wireframe annotation 작성 규칙 — screens.ts의 annotations 배열과 desc 필드 작성 시 적용
+globs: src/lib/screens.ts
+alwaysApply: false
+---
+
+# Annotation 작성 규칙
+
+`screens.ts`의 `annotations[].desc` 는 **불릿(·) 형식**으로 작성한다.
+
+## 필수 항목
+
+```
+동작  · [이 요소가 무엇을 하는가 — 클릭/입력/토글/스크롤 등]
+목적  · [왜 여기 있는가 — 전환, 정보 전달, 네비게이션 등]
+```
+
+## 조건부 항목 (해당될 때만)
+
+```
+값    · [기본값, 선택지, 범위] — 입력·토글·수량 요소
+상태  · [default / hover / active / disabled / loading / error] — 인터랙션 있는 요소
+연결  · [→ /route 또는 플로우명] — 버튼·링크 요소
+데이터· [정적 | CMS | API] — 동적 콘텐츠 요소
+제약  · [글자수 제한, min/max 등] — 입력·수량 요소
+```
+
+## 예시
+
+```ts
+// ✅ GOOD — 버튼 요소
+{
+  marker: '③ CTA — Free Trial',
+  desc: '동작 · 클릭 시 /pricing/trial로 이동\n목적 · 전환 유도. 페이지 1순위 CTA\n상태 · default(주황) / hover(어두운 주황)\n연결 · → /pricing/trial',
+}
+
+// ✅ GOOD — 토글 요소
+{
+  marker: '③ Billing toggle',
+  desc: '동작 · Monthly ↔ Annual 전환\n목적 · 연간 할인가 노출로 Annual 선택 유도\n값   · Monthly($39/mo) | Annual($280/yr)\n상태 · 선택된 옵션은 white pill 강조',
+}
+
+// ✅ GOOD — 정보성 섹션
+{
+  marker: '⑤ Trusted By',
+  desc: '동작 · 인터랙션 없음 (정적 디스플레이)\n목적 · 파트너/고객사 로고로 신뢰도 확보\n데이터· 정적 — 로고 6개 하드코딩',
+}
+
+// ❌ BAD — 서술형, 항목 구분 없음
+{
+  marker: '③ CTA',
+  desc: '클릭하면 플랜 페이지로 이동하는 주요 CTA 버튼입니다.',
+}
+```
+
+## intent 필드 작성 규칙
+
+`intent`는 이 페이지의 존재 이유를 1–3문장으로 요약한다.
+- 타겟 유저가 누구인가
+- 이 페이지에서 달성해야 할 핵심 목표
+- 주요 CTA 우선순위 (있다면)

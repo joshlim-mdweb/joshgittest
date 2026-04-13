@@ -24,3 +24,18 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Wireframe light mode — applied when ?wfTheme=light is in URL */
+[data-wf-theme="light"] body {
+  background: #ffffff !important;
+  color: #19191e !important;
+}
+
+/* Figma capture mode — forces 2080px render width */
+html[data-wf-capture="true"],
+html[data-wf-capture="true"] body {
+  width: 2080px !important;
+  min-width: 2080px !important;
+  max-width: 2080px !important;
+  overflow-x: hidden;
+}
